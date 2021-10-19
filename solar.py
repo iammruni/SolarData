@@ -22,7 +22,7 @@ def travel(dest):
 
 def find_solar():
 	time.sleep(2)
-	a = driver.find_element_by_css_selector('mat-list-item.mat-list-item:nth-child(2) > div:nth-child(1) > gsa-site-data-item:nth-child(3) > div:nth-child(1) > div:nth-child(4) > sg-unit-value:nth-child(1) > sg-unit-value-inner:nth-child(1)')
+	a = driver.find_element_by_css_selector('mat-list-item.mat-list-item:nth-child(3) > div:nth-child(1) > gsa-site-data-item:nth-child(3) > div:nth-child(1) > div:nth-child(4) > sg-unit-value:nth-child(1) > sg-unit-value-inner:nth-child(1)')
 	tempele = driver.find_element_by_css_selector('mat-list-item.mat-list-item:nth-child(7) > div:nth-child(1) > gsa-site-data-item:nth-child(3) > div:nth-child(1) > div:nth-child(4) > sg-unit-value:nth-child(1) > sg-unit-value-inner:nth-child(1)')
 	tempinner = tempele.get_attribute("innerHTML")
 	temparr = re.findall('\d*\.?\d+',tempinner)
@@ -52,21 +52,21 @@ def getLocation():
 	return latlong
 
 
-print("Getting Current Location. This takes around 15 seconds.")
+print("Getting Current Location. This takes around 15-20 seconds depending on your Internet connection and loads on the host server.")
 latilong = getLocation()
 print("Location Found: ",latilong,sep="")
-print("Finding DNI and Air Temp at current location")
+print("Finding GNI and Air Temp at current location")
 print("Accessing website")
 travel(endpt.format(latilong,latilong))
-print("Now looking for Direct Normal Irradiation (DNI) and Air Temperature.")
-dni, airtemperature = find_solar()
+print("Now looking for Global Normal Irradiation (GNI) and Air Temperature.")
+gni, airtemperature = find_solar()
 print("Data Found!", end="\n\n")
-print("DNI: ", end="")
-print(dni)
+print("GNI: ", end="")
+print(gni)
 print("Air Temperature: ", end="")
 print(airtemperature,end="\n\n")
-print("Saving DNI and Air Temperature to file")
-savefl("dni.txt", str(dni))
+print("Saving GNI and Air Temperature to file")
+savefl("gni.txt", str(gni))
 savefl("airt.txt", str(airtemperature))
 print("The data has been saved. Press any key to exit...")
 driver.quit()
